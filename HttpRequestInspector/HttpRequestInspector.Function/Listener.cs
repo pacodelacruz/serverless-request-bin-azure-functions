@@ -12,9 +12,9 @@ namespace HttpRequestInspector.Function
 {
     public class Listener
     {
-        private static IRequestBin RequestBin;
+        private static IRequestBinManager RequestBin;
 
-        public Listener(IRequestBin requestBin)
+        public Listener(IRequestBinManager requestBin)
         {
             RequestBin = requestBin;
         }

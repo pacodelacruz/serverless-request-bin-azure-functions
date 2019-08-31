@@ -15,8 +15,9 @@ namespace HttpRequestInspector.Function
             if (Environment.GetEnvironmentVariable("RequestBinProvider").ToLower() == "memory")
             {
                 builder.Services.AddMemoryCache();
-                builder.Services.AddSingleton<IRequestBin, InMemoryRequestBin>();
+                builder.Services.AddSingleton<IRequestBinManager, InMemoryRequestBinManager>();
             }
+            
                 
 
             //builder.Services.AddHttpClient();
