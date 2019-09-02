@@ -5,10 +5,8 @@ using System.Text;
 
 namespace HttpRequestInspector.Function
 {
-    public interface IRequestBin
+    public interface IRequestBinRenderer
     {
-        void StoreRequest(string id, HttpRequest request);
-
-        string GetRequest(string id);
+        string RenderToString(string binId);
     }
 }

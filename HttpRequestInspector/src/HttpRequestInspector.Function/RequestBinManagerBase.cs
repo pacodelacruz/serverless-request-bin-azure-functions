@@ -1,18 +1,23 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HttpRequestInspector.Function
 {
-    public abstract class RequestBinBase
+    public abstract class RequestBinManagerBase
     {
-        protected HttpRequestDescription GetRequestDescription(HttpRequest request)
+        protected async Task<HttpRequestDescription> GetRequestDescription(HttpRequest request)
         {
             HttpRequestDescription requestDescription = new HttpRequestDescription();
+            
+            requestDescription.Body = await new StreamReader(request.Body).ReadToEndAsync();
             requestDescription.Method = request.Method;
             requestDescription.SourceIp = request.HttpContext.Connection.RemoteIpAddress.ToString();
             requestDescription.Url = request.Path;
+            requestDescription.Timestamp = DateTime.UtcNow;
             requestDescription.QueryParams = new List<KeyValuePair<string, string>>();
             requestDescription.Headers = new List<KeyValuePair<string, string>>();
 

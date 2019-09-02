@@ -17,13 +17,11 @@ namespace HttpRequestInspector.Function
                 builder.Services.AddMemoryCache();
                 builder.Services.AddSingleton<IRequestBinManager, InMemoryRequestBinManager>();
             }
-            
-                
+            if (Environment.GetEnvironmentVariable("RequestBinRenderer").ToLower() == "liquid")
+            {
+                builder.Services.AddSingleton<IRequestBinRenderer, LiquidRequestBinRenderer>();
+            }
 
-            //builder.Services.AddHttpClient();
-            //builder.Services.AddSingleton((s) => {
-            //    //return new CosmosClient(Environment.GetEnvironmentVariable("COSMOSDB_CONNECTIONSTRING"));
-            //});
             //builder.Services.AddSingleton<ILoggerProvider, MyLoggerProvider>();
         }
     }

@@ -9,8 +9,9 @@ namespace HttpRequestInspector.Function
         public string Method;
         public string Url;
         public string SourceIp;
-        public DateTime DateTimeUtc;
+        public DateTime Timestamp;
         public List<KeyValuePair<string, string>> Headers;
         public List<KeyValuePair<string, string>> QueryParams;
+        public string Body;
     }
 }

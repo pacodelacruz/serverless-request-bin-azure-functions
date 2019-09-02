@@ -8,9 +8,8 @@ namespace HttpRequestInspector.Function
 {
     public class InMemoryRequestBinManager : RequestBinManagerBase, IRequestBinManager
     {
-        private const string RequestBinCacheName = "requestBin";
-        private static IMemoryCache Cache;
-        private static MemoryCacheEntryOptions EntryOptions;
+        private readonly IMemoryCache Cache;
+        private readonly MemoryCacheEntryOptions EntryOptions;
 
         public InMemoryRequestBinManager(IMemoryCache cache)
         {
@@ -20,14 +19,21 @@ namespace HttpRequestInspector.Function
             EntryOptions.SetAbsoluteExpiration(TimeSpan.FromHours(6));
         }
 
-        public string GetRequest(string binId)
+        public HttpRequestBinHistory GetRequestBinHistory(string binId)
         {
-            throw new NotImplementedException();
+            if (Cache.TryGetValue(binId, out List<HttpRequestDescription> storedRequests))
+                return new HttpRequestBinHistory()
+                {
+                    BinId = binId,
+                    RequestHistory = storedRequests
+                };
+            else
+                return null;
         }
 
-        public void StoreRequest(string binId, HttpRequest request)
+        public async void StoreRequest(string binId, HttpRequest request)
         {
-            var requestDescription = GetRequestDescription(request);
+            var requestDescription = await GetRequestDescription(request);
             List<HttpRequestDescription> storedRequests;
             if (Cache.TryGetValue(binId, out storedRequests))
             {
@@ -38,7 +44,6 @@ namespace HttpRequestInspector.Function
                 storedRequests = new List<HttpRequestDescription>() { requestDescription };
 
             Cache.Set(binId, storedRequests, EntryOptions);
-
         }
     }
 }

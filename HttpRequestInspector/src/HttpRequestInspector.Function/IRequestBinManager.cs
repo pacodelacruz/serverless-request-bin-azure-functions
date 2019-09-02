@@ -9,6 +9,6 @@ namespace HttpRequestInspector.Function
     {
         void StoreRequest(string binId, HttpRequest request);
 
-        string GetRequest(string binId);
+        HttpRequestBinHistory GetRequestBinHistory(string binId);
     }
 }

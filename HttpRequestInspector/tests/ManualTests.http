@@ -1,0 +1,16 @@
+@localBasePath=http://localhost:7071/api/
+@basePath=@localBasePath
+
+GET {{basePath}}12345?a=1&b=2
+x-my-header:1234567890
+
+Hello from VS CODE!
+
+###
+POST {{basePath}}12345
+x-my-header:1234567890
+
+POST from VS CODE!
+
+###
+GET {{basePath}}bin/12345

@@ -4,6 +4,13 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="InMemoryRequestBin.cs" />
+    <Compile Remove="IRequestBin.cs" />
+    <Compile Remove="RequestBinBase.cs" />
+    <Compile Remove="TableStorageRequestBinManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DotLiquid" Version="2.0.314" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
@@ -18,5 +25,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="templates\" />
   </ItemGroup>
 </Project>
