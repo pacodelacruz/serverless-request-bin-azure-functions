@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net;
+using HttpRequestInspector.Function.Services;
 
 namespace HttpRequestInspector.Function
 {
@@ -54,7 +55,7 @@ namespace HttpRequestInspector.Function
                 {
                     ContentType = "text/html",
                     StatusCode = (int)HttpStatusCode.OK,
-                    Content = "<html><body>Welcome</body></html>"
+                    Content = requestBinHistory
                 };
             }
             catch (Exception ex)

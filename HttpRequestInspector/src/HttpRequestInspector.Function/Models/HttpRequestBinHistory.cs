@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HttpRequestInspector.Function
+namespace HttpRequestInspector.Function.Models
 {
     public class HttpRequestBinHistory
     {
         public string BinId;
-        public IEnumerable<HttpRequestDescription> RequestHistory;
+        public IList<HttpRequestDescription> RequestHistoryItems;
     }
 }

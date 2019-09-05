@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HttpRequestInspector.Function
+namespace HttpRequestInspector.Function.Services
 {
     public interface IRequestBinRenderer
     {

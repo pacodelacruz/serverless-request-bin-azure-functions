@@ -1,10 +1,20 @@
 @localBasePath=http://localhost:7071/api/
-@basePath=@localBasePath
+@basePath={{localBasePath}}
 
 GET {{basePath}}12345?a=1&b=2
 x-my-header:1234567890
 
-Hello from VS CODE!
+<xml>Hello from VS CODE!</xml>
+1
+2
+3
+4
+5
+<<>>!!!///
+asdf
+asdf
+asdf
+
 
 ###
 POST {{basePath}}12345

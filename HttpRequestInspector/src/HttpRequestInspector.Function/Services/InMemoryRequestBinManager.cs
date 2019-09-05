@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
+using HttpRequestInspector.Function.Models;
 
-namespace HttpRequestInspector.Function
+namespace HttpRequestInspector.Function.Services
 {
     public class InMemoryRequestBinManager : RequestBinManagerBase, IRequestBinManager
     {
@@ -25,7 +26,7 @@ namespace HttpRequestInspector.Function
                 return new HttpRequestBinHistory()
                 {
                     BinId = binId,
-                    RequestHistory = storedRequests
+                    RequestHistoryItems = storedRequests
                 };
             else
                 return null;

@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using HttpRequestInspector.Function.Models;
 
-namespace HttpRequestInspector.Function
+namespace HttpRequestInspector.Function.Services
 {
     public interface IRequestBinManager
     {

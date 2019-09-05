@@ -3,6 +3,7 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using HttpRequestInspector.Function.Services;
 
 [assembly: FunctionsStartup(typeof(HttpRequestInspector.Function.Startup))]
 
@@ -19,7 +20,7 @@ namespace HttpRequestInspector.Function
             }
             if (Environment.GetEnvironmentVariable("RequestBinRenderer").ToLower() == "liquid")
             {
-                builder.Services.AddSingleton<IRequestBinRenderer, LiquidRequestBinRenderer>();
+                builder.Services.AddSingleton<IRequestBinRenderer, HtmlRequestBinRenderer>();
             }
 
             //builder.Services.AddSingleton<ILoggerProvider, MyLoggerProvider>();

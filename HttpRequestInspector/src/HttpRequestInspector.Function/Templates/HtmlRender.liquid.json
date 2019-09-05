@@ -1,0 +1,82 @@
+{
+  "BinId": "12345",
+  "RequestHistory": [
+    {
+      "Method": "GET",
+      "Path": "/api/12345",
+      "SourceIp": "127.0.0.1",
+      "Timestamp": "2019-09-03T22:55:09.6812188Z",
+      "Headers": [
+        {
+          "Key": "Connection",
+          "Value": "close"
+        },
+        {
+          "Key": "Accept-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Key": "Host",
+          "Value": "localhost:7071"
+        },
+        {
+          "Key": "User-Agent",
+          "Value": "vscode-restclient"
+        },
+        {
+          "Key": "Content-Length",
+          "Value": "19"
+        },
+        {
+          "Key": "x-my-header",
+          "Value": "1234567890"
+        }
+      ],
+      "QueryParams": [
+        {
+          "Key": "a",
+          "Value": "1"
+        },
+        {
+          "Key": "b",
+          "Value": "2"
+        }
+      ],
+      "Body": "&lt;xml&gt;&lt;soap&gt;Hello from VS CODE!&lt;/soap&gt;&lt;/xml&gt;"
+    },
+    {
+      "Method": "POST",
+      "Path": "/api/12345",
+      "SourceIp": "127.0.0.1",
+      "Timestamp": "2019-09-03T22:55:12.9156114Z",
+      "Headers": [
+        {
+          "Key": "Connection",
+          "Value": "close"
+        },
+        {
+          "Key": "Accept-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Key": "Host",
+          "Value": "localhost:7071"
+        },
+        {
+          "Key": "User-Agent",
+          "Value": "vscode-restclient"
+        },
+        {
+          "Key": "Content-Length",
+          "Value": "18"
+        },
+        {
+          "Key": "x-my-header",
+          "Value": "1234567890"
+        }
+      ],
+      "QueryParams": [],
+      "Body": "POST from VS CODE!"
+    }
+  ]
+}

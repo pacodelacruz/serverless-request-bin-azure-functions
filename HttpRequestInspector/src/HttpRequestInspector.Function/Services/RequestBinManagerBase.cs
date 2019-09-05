@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using HttpRequestInspector.Function.Models;
+using System.Web;
 
-namespace HttpRequestInspector.Function
+namespace HttpRequestInspector.Function.Services
 {
     public abstract class RequestBinManagerBase
     {
@@ -16,7 +18,7 @@ namespace HttpRequestInspector.Function
             requestDescription.Body = await new StreamReader(request.Body).ReadToEndAsync();
             requestDescription.Method = request.Method;
             requestDescription.SourceIp = request.HttpContext.Connection.RemoteIpAddress.ToString();
-            requestDescription.Url = request.Path;
+            requestDescription.Path = request.Path;
             requestDescription.Timestamp = DateTime.UtcNow;
             requestDescription.QueryParams = new List<KeyValuePair<string, string>>();
             requestDescription.Headers = new List<KeyValuePair<string, string>>();

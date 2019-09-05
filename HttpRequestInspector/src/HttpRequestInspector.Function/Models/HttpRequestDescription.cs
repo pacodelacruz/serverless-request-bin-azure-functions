@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HttpRequestInspector.Function
+namespace HttpRequestInspector.Function.Models
 {
     public class HttpRequestDescription
     {
         public string Method;
-        public string Url;
+        public string Path;
         public string SourceIp;
         public DateTime Timestamp;
         public List<KeyValuePair<string, string>> Headers;

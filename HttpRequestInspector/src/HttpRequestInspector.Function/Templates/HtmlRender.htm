@@ -1,0 +1,159 @@
+<html>
+    <title>Serverless Http Request Bin</title>
+    <style type="text/css">
+        body {
+            font-family: Consolas, Arial;
+            color:#eeeeee;
+            background-color: #212121;
+            font-size: 0.90em;
+        }
+        h1 {
+            font-family: Consolas, Arial;
+            text-align: center;
+            color:#eeeeee;
+            width: 100%;
+            background: #00adb5;
+            margin: 0 -9999rem;
+            padding: 0.25rem 9999rem;
+        }
+        h2 {
+            width: 100%;
+            background: #393e46;
+            color:#eeeeee;
+            margin: 0 -9999rem;
+            padding: 0.25rem 9999rem;
+        }
+        table.requestDescription {
+            padding: 0px;
+            margin:0;
+            border-collapse: collapse;
+        }
+        td {            
+            padding-top: 1px; 
+            padding-bottom: 1px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        td.header {
+            background: #eeeeee;
+            color: #212121;
+            font-weight: bold;
+        }
+        td.key2 {
+            background: #393e46;
+            color:#eeeeee;
+            min-width: 150px;
+            width: 200px;
+            max-width: 250px;
+        }
+        td.value2 {
+            background: #393e46;
+            color:#eeeeee;
+        }
+        td.key3 {
+            background: #393e46;
+            color:#eeeeee;
+            padding-left: 20px;
+            font-size: 0.80em;
+        }
+        td.value3 {
+            color: #212121;
+            color:#eeeeee;
+            font-size: 0.80em;
+        }
+        td.preformatted {
+            font-size: 0.80em;
+            font-family: monospace;
+            white-space: pre;
+        }
+        p.error {
+            color: red;
+            font-weight: bold;
+        }
+        footer {
+            font-size: 0.75em;
+        }
+        hr { 
+            display: block;
+            margin-before: 0.5em;
+            margin-after: 0.5em;
+            margin-start: auto;
+            margin-end: auto;
+            overflow: hidden;
+            border-style: inset;
+            border-width: 1px;
+        }           
+        * {
+            margin-top: 0;
+        }       
+    </style>
+    <h1>Serverless Http Request Bin</h1>
+    <h2>Bin: 12345</h2>
+    <body>
+        
+        <br/>
+        
+        <table class="requestDescription" width="100%">
+            <tr><td class="header" colspan="2">GET /api/12345</td></tr>
+            
+            <tr><td class="key2">Timestamp:</td><td class="value2">2019-09-03T22:55:09.6812188Z</td></tr>
+            <tr><td class="key2">SourceIp:</td><td class="value2">127.0.0.1</td></tr>           
+            <tr><td class="key2" colspan="2">Query</td</tr>            
+            <tr><td class="key3">a</td><td class="value3">1</td></tr>
+            
+            <tr><td>b</td><td>2</td></tr>
+            
+            <tr><td>Headers</td><td></td></tr>
+            
+            <tr><td>Connection</td><td>close</td></tr>
+            
+            <tr><td>Accept-Encoding</td><td>gzip</td></tr>
+            
+            <tr><td>Host</td><td>localhost:7071</td></tr>
+            
+            <tr><td>User-Agent</td><td>vscode-restclient</td></tr>
+            
+            <tr><td>Content-Length</td><td>19</td></tr>
+            
+            <tr><td>x-my-header</td><td>1234567890</td></tr>        
+            <tr><td class="key2" colspan="2">Body</td</tr>      
+            <tr><td class="preformatted" colspan="2"><textarea readonly width="100%"><xml>Hello from VS CODE!</xml></textarea></td</tr>
+            
+        </table>  
+        <br/>        
+        <table class="requestDescription">
+            <tr><td>POST</td><td>/api/12345</td></tr>
+            <tr><td>Timestamp:</td><td>2019-09-03T22:55:12.9156114Z</td></tr>
+            <tr><td>SourceIp:</td><td>127.0.0.1</td></tr>           
+            <tr><td>Query</td><td></td></tr>
+            
+            <tr><td>Headers</td><td></td></tr>
+            
+            <tr><td>Connection</td><td>close</td></tr>
+            
+            <tr><td>Accept-Encoding</td><td>gzip</td></tr>
+            
+            <tr><td>Host</td><td>localhost:7071</td></tr>
+            
+            <tr><td>User-Agent</td><td>vscode-restclient</td></tr>
+            
+            <tr><td>Content-Length</td><td>18</td></tr>
+            
+            <tr><td>x-my-header</td><td>1234567890</td></tr>
+            
+        </table>
+        <strong>Body:</strong>
+        <pre>POST from VS CODE!</pre>  
+        <hr/>
+              
+        <p class="error">Error Message</p>
+    </body>
+    <footer>
+        <br/>
+        <hr/>
+        <p>
+        Created by <a href="https://twitter.com/pacodelacruz">Paco de la Cruz</a>
+        <br/>
+        Powered by Azure Functions</p>
+    </footer>
+</html>
