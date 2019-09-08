@@ -14,21 +14,34 @@ namespace HttpRequestInspector.Function.Services
     public class HtmlRequestBinRenderer : IRequestBinRenderer
     {
         private readonly IRequestBinManager RequestBinManager;
+        private readonly Template LiquidTemplate;
 
-        public HtmlRequestBinRenderer(IRequestBinManager requestBinManager)
+        public HtmlRequestBinRenderer(IRequestBinManager requestBinManager) : base()
         {
             RequestBinManager = requestBinManager;
+        }
+
+        public HtmlRequestBinRenderer()
+        {
+            LiquidTemplate = Template.Parse(File.ReadAllText(@"Templates\HtmlRender.liquid", Encoding.UTF8));            
         }
 
         public string RenderToString(string binId)
         {
             var requestBinHistory = HtmlEncodeProperties(RequestBinManager.GetRequestBinHistory(binId));
+            var requestBinHistoryAsHash = Hash.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, object>>(JsonConvert.SerializeObject(requestBinHistory)));
+            //var requestBinHistoryAsHash = 
+
+            //var json = JsonConvert.DeserializeObject<IDictionary<string, object>>(@"{ ""names"":[{""name"": ""John""},{""name"":""Doe""}]  }", new DictionaryConverter());
+            var jsonHash = Hash.FromDictionary(json);
+            var templatetest = "<h1>{{device}}</h1><h2>{{speed}}</h2>{% for client in names %}<h4>{{client.name}}</h4>{% endfor %}";
+
+            var template = Template.Parse(templatetest);
+            var render = template.Render(jsonHash);
+
             if (requestBinHistory != null)
             {
-                //string serialisedRequestBinHistory = JsonConvert.SerializeObject(requestBinHistory);
-                string liquidTemplateContent = File.ReadAllText(@"Templates\HtmlRender.liquid", Encoding.UTF8);
-                Template liquidTemplate = Template.Parse(liquidTemplateContent);
-                var renderedHtml = liquidTemplate.Render(Hash.FromAnonymousObject(requestBinHistory));
+                var renderedHtml = LiquidTemplate.Render(Hash.FromAnonymousObject(new { RequestBinHistory = requestBinHistory }));
                 return renderedHtml;
             }
             else
