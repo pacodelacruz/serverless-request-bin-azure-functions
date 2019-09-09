@@ -11,6 +11,13 @@ using HttpRequestInspector.Function.Services;
 
 namespace HttpRequestInspector.Function
 {
+    //TODO: DELETE History
+    //TODO: Error Handling
+    //TODO: Keep it warm
+    //TODO: Configure Timeout
+    //TODO: ARM Template with App Insights and App Settings
+    //TODO: Deploy from Git
+    //TODO: Add to Serverless Library
     public class PersistIntoBin
     {
         private readonly IRequestBinManager RequestBinManager;

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using DotLiquid;
 using HttpRequestInspector.Function.Models;
+using HttpRequestInspector.Function.Extensions;
 using System.IO;
 
 namespace HttpRequestInspector.Function.Services
@@ -29,22 +30,17 @@ namespace HttpRequestInspector.Function.Services
         public string RenderToString(string binId)
         {
             var requestBinHistory = HtmlEncodeProperties(RequestBinManager.GetRequestBinHistory(binId));
-            var requestBinHistoryAsHash = Hash.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, object>>(JsonConvert.SerializeObject(requestBinHistory)));
-            //var requestBinHistoryAsHash = 
-
-            //var json = JsonConvert.DeserializeObject<IDictionary<string, object>>(@"{ ""names"":[{""name"": ""John""},{""name"":""Doe""}]  }", new DictionaryConverter());
-            var jsonHash = Hash.FromDictionary(json);
-            var templatetest = "<h1>{{device}}</h1><h2>{{speed}}</h2>{% for client in names %}<h4>{{client.name}}</h4>{% endfor %}";
-
-            var template = Template.Parse(templatetest);
-            var render = template.Render(jsonHash);
 
             if (requestBinHistory != null)
             {
-                var renderedHtml = LiquidTemplate.Render(Hash.FromAnonymousObject(new { RequestBinHistory = requestBinHistory }));
+                //var requestBinHistoryAsHash = Hash.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, object>>(JsonConvert.SerializeObject(requestBinHistory)));
+                var dict = requestBinHistory.ToDictionary();
+                var hash = Hash.FromDictionary(dict);
+                var renderedHtml = LiquidTemplate.Render(hash);
                 return renderedHtml;
             }
             else
+                //TODO: Return Message of NOT Found
                 return "";           
         }
 
@@ -55,6 +51,9 @@ namespace HttpRequestInspector.Function.Services
         /// <returns></returns>
         private HttpRequestBinHistory HtmlEncodeProperties(HttpRequestBinHistory requestBinHistory)
         {
+            if (requestBinHistory == null)
+                return null;
+
             var htmlEncodedRequestBinHistory = new HttpRequestBinHistory();
             htmlEncodedRequestBinHistory.BinId = HttpUtility.HtmlEncode(requestBinHistory.BinId);
             htmlEncodedRequestBinHistory.RequestHistoryItems = new List<HttpRequestDescription>();
