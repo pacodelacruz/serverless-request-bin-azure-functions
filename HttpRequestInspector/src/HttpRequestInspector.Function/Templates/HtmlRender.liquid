@@ -101,7 +101,8 @@
     <h1>Serverless Http Request Bin</h1>
     <h2>Bin: {{BinId}}</h2>
     <body>
-        {% for Request in RequestHistory %}
+		{% assign SortedRequests = (RequestHistoryItems | reverse : "Timestamp") -%}
+        {% for Request in SortedRequests %}
         <br/>
         
         <table class="requestDescription" width="100%">

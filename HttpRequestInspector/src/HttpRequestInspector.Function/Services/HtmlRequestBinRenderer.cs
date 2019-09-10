@@ -16,8 +16,8 @@ namespace HttpRequestInspector.Function.Services
     {
         private readonly IRequestBinManager RequestBinManager;
         private readonly Template LiquidTemplate;
-
-        public HtmlRequestBinRenderer(IRequestBinManager requestBinManager) : base()
+        
+        public HtmlRequestBinRenderer(IRequestBinManager requestBinManager) : this()
         {
             RequestBinManager = requestBinManager;
         }
@@ -33,10 +33,9 @@ namespace HttpRequestInspector.Function.Services
 
             if (requestBinHistory != null)
             {
-                //var requestBinHistoryAsHash = Hash.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, object>>(JsonConvert.SerializeObject(requestBinHistory)));
-                var dict = requestBinHistory.ToDictionary();
-                var hash = Hash.FromDictionary(dict);
-                var renderedHtml = LiquidTemplate.Render(hash);
+                //var dict = requestBinHistory.ToDictionary();
+                //var hash = Hash.FromDictionary(dict);
+                var renderedHtml = LiquidTemplate.Render(Hash.FromDictionary(requestBinHistory.ToDictionary()));
                 return renderedHtml;
             }
             else
@@ -64,6 +63,7 @@ namespace HttpRequestInspector.Function.Services
                 htmlEncodedRequest.Method = HttpUtility.HtmlEncode(request.Method);
                 htmlEncodedRequest.Path = HttpUtility.HtmlEncode(request.Path);
                 htmlEncodedRequest.SourceIp = HttpUtility.HtmlEncode(request.SourceIp);
+                htmlEncodedRequest.Timestamp = request.Timestamp;
                 htmlEncodedRequest.QueryParams = new List<KeyValuePair<string, string>>();
                 htmlEncodedRequest.Headers = new List<KeyValuePair<string, string>>();
                 foreach (var queryParam in request.QueryParams)
