@@ -11,7 +11,7 @@ namespace HttpRequestInspector.Function.Extensions
     {
         public static IDictionary<string, object> ToDictionary(this object source)
         {
-            // It can be optimised using Reflection
+            // It could be optimised using Reflection
             return JsonConvert.DeserializeObject<IDictionary<string, object>>(JsonConvert.SerializeObject(source), new JsonDictionaryConverter());
         }
     }

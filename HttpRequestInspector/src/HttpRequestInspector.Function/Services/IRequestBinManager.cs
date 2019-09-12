@@ -10,6 +10,10 @@ namespace HttpRequestInspector.Function.Services
     {
         void StoreRequest(string binId, HttpRequest request);
 
-        HttpRequestBinHistory GetRequestBinHistory(string binId);
+        HttpRequestBinHistory GetRequestBinHistory(string binId, string binUrl, string errorMessage);
+
+        bool EmptyBin(string binId);
+
+        bool IsBinIdValid(string binId, out string validationMessage);
     }
 }

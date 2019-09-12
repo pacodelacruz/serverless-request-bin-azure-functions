@@ -12,13 +12,13 @@
             text-align: center;
             color:#eeeeee;
             width: 100%;
-            background: #00adb5;
+            background: #5b9aa0;
             margin: 0 -9999rem;
             padding: 0.25rem 9999rem;
         }
         h2 {
             width: 100%;
-            background: #393e46;
+            background2: #393e46;
             color:#eeeeee;
             margin: 0 -9999rem;
             padding: 0.25rem 9999rem;
@@ -66,7 +66,7 @@
             white-space: pre;
         }
         p.error {
-            color: red;
+            color: #c83349;
             font-weight: bold;
         }
         footer {
@@ -99,30 +99,34 @@
         }       
     </style>
     <h1>Serverless Http Request Bin</h1>
-    <h2>Bin: {{BinId}}</h2>
+    <h2>Bin: {{BinUrl}}</h2>
     <body>
-		{% assign SortedRequests = (RequestHistoryItems | reverse : "Timestamp") -%}
-        {% for Request in SortedRequests %}
-        <br/>
+		{% if RequestHistoryItems.size > 0 %}
+			{% for Request in RequestHistoryItems %}
+			<br/>
         
-        <table class="requestDescription" width="100%">
-            <tr><td class="header" colspan="2">{{Request.Method}} {{Request.Path}}</td></tr>
-            <tr><td class="key2">Timestamp</td><td class="value2">{{Request.Timestamp}}</td></tr>
-            <tr><td class="key2">SourceIp</td><td class="value2">{{Request.SourceIp}}</td></tr>            
-            <tr><td class="key2" colspan="2">Query</td</tr>            
-            {% for Param in Request.QueryParams %}
-            <tr><td class="key3"><pre>{{Param.Key}}</pre></td><td class="value3"><pre>{{Param.Value}}</pre></td></tr>
-            {% endfor%}
-            <tr><td class="key2" colspan="2">Headers</td</tr>
-            {% for Header in Request.Headers %}
-            <tr><td class="key3"><pre>{{Header.Key}}</pre></td><td class="value3"><pre>{{Header.Value}}</pre></td></tr>
-            {% endfor%}     
-            <tr><td class="key2" colspan="2">Body</td</tr>      
-            <tr><td class="preformatted" colspan="2"><pre>{{Request.Body}}</pre></td></tr>
-        </table>
-        <hr/>
-        {% endfor %}      
-        <p class="error">Error Message</p>
+			<table class="requestDescription" width="100%">
+				<tr><td class="header" colspan="2">{{Request.Method}} {{Request.Path}}</td></tr>
+				<tr><td class="key2">Timestamp</td><td class="value2">{{Request.Timestamp}}</td></tr>
+				<tr><td class="key2">SourceIp</td><td class="value2">{{Request.SourceIp}}</td></tr>            
+				<tr><td class="key2" colspan="2">Query</td</tr>            
+				{% for Param in Request.QueryParams %}
+				<tr><td class="key3"><pre>{{Param.Key}}</pre></td><td class="value3"><pre>{{Param.Value}}</pre></td></tr>
+				{% endfor%}
+				<tr><td class="key2" colspan="2">Headers</td</tr>
+				{% for Header in Request.Headers %}
+				<tr><td class="key3"><pre>{{Header.Key}}</pre></td><td class="value3"><pre>{{Header.Value}}</pre></td></tr>
+				{% endfor%}     
+				<tr><td class="key2" colspan="2">Body</td</tr>      
+				<tr><td class="preformatted" colspan="2"><pre>{{Request.Body}}</pre></td></tr>
+			</table>
+			<hr/>
+			{% endfor %}
+		{% endif %}
+		{% if ErrorMessage != blank %}
+			<br/>
+			<p class="error">{{ErrorMessage}}</p>
+		{% endif %}
     </body>
     <footer>
         <br/>
@@ -131,5 +135,8 @@
         Created by <a href="https://twitter.com/pacodelacruz">Paco de la Cruz</a>
         <br/>
         Powered by Azure Functions</p>
+		<br/>
+		The Serverless Http Request Bin is designed for personal use.<br/>
+		Bins are persisted in memory and can be recycled at any time, so please treat them as highly ephemeral.
     </footer>
 </html>

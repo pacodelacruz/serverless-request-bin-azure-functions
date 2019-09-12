@@ -6,10 +6,10 @@ x-my-header:1234567890
 
 <xml>Hello from VS CODE!</xml>
 1
-2
-3
-4
-5
+     2
+   3       3    3
+     4
+   5
 <<>>!!!///
 asdf
 asdf
@@ -24,3 +24,6 @@ POST from VS CODE!
 
 ###
 GET {{basePath}}bin/12345
+
+###
+DELETE {{basePath}}bin/12345

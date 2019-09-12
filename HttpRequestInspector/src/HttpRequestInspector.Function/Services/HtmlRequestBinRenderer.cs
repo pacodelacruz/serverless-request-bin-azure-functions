@@ -9,14 +9,15 @@ using DotLiquid;
 using HttpRequestInspector.Function.Models;
 using HttpRequestInspector.Function.Extensions;
 using System.IO;
+using System.Linq;
 
 namespace HttpRequestInspector.Function.Services
 {
-    public class HtmlRequestBinRenderer : IRequestBinRenderer
+    public class HtmlRequestBinRenderer : RequestBinBase, IRequestBinRenderer
     {
         private readonly IRequestBinManager RequestBinManager;
         private readonly Template LiquidTemplate;
-        
+
         public HtmlRequestBinRenderer(IRequestBinManager requestBinManager) : this()
         {
             RequestBinManager = requestBinManager;
@@ -24,23 +25,13 @@ namespace HttpRequestInspector.Function.Services
 
         public HtmlRequestBinRenderer()
         {
-            LiquidTemplate = Template.Parse(File.ReadAllText(@"Templates\HtmlRender.liquid", Encoding.UTF8));            
+            LiquidTemplate = Template.Parse(File.ReadAllText(@"Templates\HtmlRender.liquid", Encoding.UTF8));
         }
 
-        public string RenderToString(string binId)
+        public string RenderToString(string binId, string binUrl, string errorMessage = null)
         {
-            var requestBinHistory = HtmlEncodeProperties(RequestBinManager.GetRequestBinHistory(binId));
-
-            if (requestBinHistory != null)
-            {
-                //var dict = requestBinHistory.ToDictionary();
-                //var hash = Hash.FromDictionary(dict);
-                var renderedHtml = LiquidTemplate.Render(Hash.FromDictionary(requestBinHistory.ToDictionary()));
-                return renderedHtml;
-            }
-            else
-                //TODO: Return Message of NOT Found
-                return "";           
+            var requestBinHistory = PrepareBinHistoryForHtml(RequestBinManager.GetRequestBinHistory(binId, binUrl, errorMessage));
+            return LiquidTemplate.Render(Hash.FromDictionary(requestBinHistory.ToDictionary()));
         }
 
         /// <summary>
@@ -48,15 +39,19 @@ namespace HttpRequestInspector.Function.Services
         /// </summary>
         /// <param name="requestBinHistory"></param>
         /// <returns></returns>
-        private HttpRequestBinHistory HtmlEncodeProperties(HttpRequestBinHistory requestBinHistory)
+        private HttpRequestBinHistory PrepareBinHistoryForHtml(HttpRequestBinHistory requestBinHistory)
         {
             if (requestBinHistory == null)
                 return null;
+            if (requestBinHistory.RequestHistoryItems == null)
+                return requestBinHistory;
 
             var htmlEncodedRequestBinHistory = new HttpRequestBinHistory();
             htmlEncodedRequestBinHistory.BinId = HttpUtility.HtmlEncode(requestBinHistory.BinId);
+            htmlEncodedRequestBinHistory.BinUrl = HttpUtility.HtmlEncode(requestBinHistory.BinUrl);
+            htmlEncodedRequestBinHistory.ErrorMessage = HttpUtility.HtmlEncode(requestBinHistory.ErrorMessage);
             htmlEncodedRequestBinHistory.RequestHistoryItems = new List<HttpRequestDescription>();
-            foreach (var request in requestBinHistory.RequestHistoryItems)
+            foreach (var request in requestBinHistory.RequestHistoryItems.OrderByDescending(i => i.Timestamp).ToList())
             {
                 var htmlEncodedRequest = new HttpRequestDescription();
                 htmlEncodedRequest.Body = HttpUtility.HtmlEncode(request.Body);

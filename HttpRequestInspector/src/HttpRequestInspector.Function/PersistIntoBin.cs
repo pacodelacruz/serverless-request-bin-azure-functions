@@ -11,13 +11,14 @@ using HttpRequestInspector.Function.Services;
 
 namespace HttpRequestInspector.Function
 {
-    //TODO: DELETE History
     //TODO: Error Handling
     //TODO: Keep it warm
-    //TODO: Configure Timeout
     //TODO: ARM Template with App Insights and App Settings
     //TODO: Deploy from Git
     //TODO: Add to Serverless Library
+    //TODO: Add comments
+    //TODO: Add Readme
+    //TODO: Test
     public class PersistIntoBin
     {
         private readonly IRequestBinManager RequestBinManager;
@@ -38,15 +39,13 @@ namespace HttpRequestInspector.Function
             try
             {
                 log.LogInformation(new EventId(100), "{BinId}, {Message}", binId, $"Request received for bin '{binId}'");
-
-                if (string.IsNullOrWhiteSpace(binId) || string.Compare(binId, "bin", true) == 0)
-                    return new BadRequestObjectResult("Please pass a bin Id");
-                if (binId.Length > 36)
-                    return new BadRequestObjectResult("Bin Id cannot be longer than 36 chars");
-
+                if (!RequestBinManager.IsBinIdValid(binId, out var validationMessage))
+                {
+                    log.LogError(new EventId(191), "{BinId}, {Message}", binId, $"Invalid Bin Id '{binId}'.");
+                    return new BadRequestObjectResult(validationMessage);
+                }
                 RequestBinManager.StoreRequest(binId, request);
                 log.LogInformation(new EventId(110), "{BinId}, {Message}", binId, $"Request for bin '{binId}' stored.");
-
                 return new OkResult();
             }
             catch (Exception ex)

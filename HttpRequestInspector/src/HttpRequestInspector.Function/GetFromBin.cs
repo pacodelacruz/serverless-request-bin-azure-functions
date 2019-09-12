@@ -32,25 +32,19 @@ namespace HttpRequestInspector.Function
             try
             {
                 log.LogInformation(new EventId(200), "{BinId}, {Message}", binId, $"A request to return request history for bin '{binId}' has been received");
-
-                if (string.IsNullOrWhiteSpace(binId))
+                if (!RequestBinRenderer.IsBinIdValid(binId, out var validationMessage))
+                {
+                    log.LogError(new EventId(291), "{BinId}, {Message}", binId, $"Invalid Bin Id '{binId}'.");
                     return new ContentResult
                     {
                         ContentType = "text/html",
                         StatusCode = (int)HttpStatusCode.BadRequest,
-                        Content = "<html><body>Please provide a valid bin Id</body></html>"
+                        Content = RequestBinRenderer.RenderToString(binId, "Invalid", validationMessage)
                     };
-                if (binId.Length > 36)
-                    return new ContentResult
-                    {
-                        ContentType = "text/html",
-                        StatusCode = (int)HttpStatusCode.BadRequest,
-                        Content = "<html><body>Bin Id cannot be longer than 36 chars</body></html>"
-                    };
-
-                var requestBinHistory = RequestBinRenderer.RenderToString(binId);
-                log.LogInformation(new EventId(210), "{BinId}, {Message}", binId, $"Request history for bin '{binId}' returned successfully");
-
+                }
+                var binUrl = $"http{(request.IsHttps ? "s" : "")}://{request.Host}{request.Path.ToString().Replace("/bin", "")}";
+                var requestBinHistory = RequestBinRenderer.RenderToString(binId, binUrl);
+                log.LogInformation(new EventId(210), "{BinId}, {Message}", binId, $"Request history for bin '{binId}' returned successfully.");
                 return new ContentResult
                 {
                     ContentType = "text/html",
