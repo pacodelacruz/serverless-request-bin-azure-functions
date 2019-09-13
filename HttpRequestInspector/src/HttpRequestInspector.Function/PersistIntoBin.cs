@@ -11,7 +11,6 @@ using HttpRequestInspector.Function.Services;
 
 namespace HttpRequestInspector.Function
 {
-    //TODO: Error Handling
     //TODO: Keep it warm
     //TODO: ARM Template with App Insights and App Settings
     //TODO: Deploy from Git
@@ -19,6 +18,13 @@ namespace HttpRequestInspector.Function
     //TODO: Add comments
     //TODO: Add Readme
     //TODO: Test
+
+    /// <summary>
+    /// Function to Persist a Http request into a particular Request Bin. 
+    /// The RequestBinManager is defined via Constructor Dependency Injection. 
+    /// To call this function submit a request with ANY Method (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS, TRACE)to
+    /// http(s)://{{basepath}}/{{binId}}
+    /// </summary>
     public class PersistIntoBin
     {
         private readonly IRequestBinManager RequestBinManager;
@@ -38,7 +44,7 @@ namespace HttpRequestInspector.Function
         {
             try
             {
-                log.LogInformation(new EventId(100), "{BinId}, {Message}", binId, $"Request received for bin '{binId}'");
+                log.LogInformation(new EventId(100), "{BinId}, {Message}", binId, $"Request received for bin '{binId}'.");
                 if (!RequestBinManager.IsBinIdValid(binId, out var validationMessage))
                 {
                     log.LogError(new EventId(191), "{BinId}, {Message}", binId, $"Invalid Bin Id '{binId}'.");
@@ -50,7 +56,7 @@ namespace HttpRequestInspector.Function
             }
             catch (Exception ex)
             {
-                log.LogError(new EventId(190), ex, "{BinId}, {Message}", binId, $"Error occurred while processing request for bin: '{binId}'");
+                log.LogError(new EventId(190), ex, "{BinId}, {Message}", binId, $"Error occurred while trying to persist request into bin: '{binId}'.");
                 throw;
             }
         }

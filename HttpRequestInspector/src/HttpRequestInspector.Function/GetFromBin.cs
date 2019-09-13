@@ -12,6 +12,12 @@ using HttpRequestInspector.Function.Services;
 
 namespace HttpRequestInspector.Function
 {
+    /// <summary>
+    /// Function to Get the request history of a particular Bin. 
+    /// The RequestBinManager is defined via Constructor Dependency Injection. 
+    /// To call this function submit a request to 
+    /// GET http(s)://{{basepath}}/bin/{{binId}}
+    /// </summary>
     public class GetFromBin
     {
         private readonly IRequestBinRenderer RequestBinRenderer;
@@ -27,11 +33,12 @@ namespace HttpRequestInspector.Function
             "get", 
             Route = "bin/{binId}")] HttpRequest request,
             string binId,
-            ILogger log)
+            ILogger log,
+            ExecutionContext context)
         {
             try
             {
-                log.LogInformation(new EventId(200), "{BinId}, {Message}", binId, $"A request to return request history for bin '{binId}' has been received");
+                log.LogInformation(new EventId(200), "{BinId}, {Message}", binId, $"A request to return request history for bin '{binId}' has been received.");
                 if (!RequestBinRenderer.IsBinIdValid(binId, out var validationMessage))
                 {
                     log.LogError(new EventId(291), "{BinId}, {Message}", binId, $"Invalid Bin Id '{binId}'.");
@@ -54,8 +61,13 @@ namespace HttpRequestInspector.Function
             }
             catch (Exception ex)
             {
-                log.LogError(new EventId(290), ex, "{BinId}", binId, $"Error occurred returning request history for bin: '{binId}'");
-                throw;
+                log.LogError(new EventId(290), ex, "{BinId}", binId, $"Error occurred trying to return the request history for bin: '{binId}'");
+                return new ContentResult
+                {
+                    ContentType = "text/html",
+                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                    Content = RequestBinRenderer.RenderToString(binId, "", $"500 Internal Server Error. Execution Id: '{context.InvocationId.ToString()}'")
+                };
             }
         }
     }

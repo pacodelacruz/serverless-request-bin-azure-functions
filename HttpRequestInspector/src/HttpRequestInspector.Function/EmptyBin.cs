@@ -12,6 +12,12 @@ using HttpRequestInspector.Function.Services;
 
 namespace HttpRequestInspector.Function
 {
+    /// <summary>
+    /// Function to empty a particular Request Bin. 
+    /// The RequestBinManager is defined via Constructor Dependency Injection. 
+    /// To call this function submit a request to 
+    /// DELETE http(s)://{{basepath}}/bin/{{binId}}
+    /// </summary>
     public class EmptyBin
     {
         private readonly IRequestBinManager RequestBinManager;
@@ -44,7 +50,7 @@ namespace HttpRequestInspector.Function
             }
             catch (Exception ex)
             {
-                log.LogError(new EventId(290), ex, "{BinId}", binId, $"Error occurred returning request history for bin: '{binId}'");
+                log.LogError(new EventId(390), ex, "{BinId}", binId, $"Error occurred while trying to delete request history for bin: '{binId}'");
                 throw;
             }
         }

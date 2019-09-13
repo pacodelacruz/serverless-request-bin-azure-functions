@@ -10,21 +10,28 @@ using HttpRequestInspector.Function.Models;
 using HttpRequestInspector.Function.Extensions;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Options;
 
 namespace HttpRequestInspector.Function.Services
 {
+    /// <summary>
+    /// Service to render the Request Bin History into Html for user visualisation
+    /// </summary>
     public class HtmlRequestBinRenderer : RequestBinBase, IRequestBinRenderer
     {
         private readonly IRequestBinManager RequestBinManager;
         private readonly Template LiquidTemplate;
+        private readonly IOptions<RequestBinOptions> Options;
 
-        public HtmlRequestBinRenderer(IRequestBinManager requestBinManager) : this()
+        public HtmlRequestBinRenderer(IRequestBinManager requestBinManager, IOptions<RequestBinOptions> options) : this(options)
         {
+            Options = options;
             RequestBinManager = requestBinManager;
         }
 
-        public HtmlRequestBinRenderer()
+        public HtmlRequestBinRenderer(IOptions<RequestBinOptions> options) : base(options)
         {
+            // Read and load the Liquid Template from file. 
             LiquidTemplate = Template.Parse(File.ReadAllText(@"Templates\HtmlRender.liquid", Encoding.UTF8));
         }
 
@@ -36,6 +43,7 @@ namespace HttpRequestInspector.Function.Services
 
         /// <summary>
         /// Encodes string values on the HttpRequestBinHistory to Html so it can be rendered properly
+        /// Sorts requests by Timestamp descending
         /// </summary>
         /// <param name="requestBinHistory"></param>
         /// <returns></returns>
@@ -62,15 +70,19 @@ namespace HttpRequestInspector.Function.Services
                 htmlEncodedRequest.QueryParams = new List<KeyValuePair<string, string>>();
                 htmlEncodedRequest.Headers = new List<KeyValuePair<string, string>>();
                 foreach (var queryParam in request.QueryParams)
-                {
-                    htmlEncodedRequest.QueryParams.Add(new KeyValuePair<string, string>(HttpUtility.HtmlEncode(queryParam.Key), HttpUtility.HtmlEncode(queryParam.Value)));
-                }
+                    htmlEncodedRequest.QueryParams.Add(new KeyValuePair<string, string>(HttpUtility.HtmlEncode(queryParam.Key), HttpUtility.HtmlEncode(queryParam.Value)));                
                 foreach (var header in request.Headers)
-                {
                     htmlEncodedRequest.Headers.Add(new KeyValuePair<string, string>(HttpUtility.HtmlEncode(header.Key), HttpUtility.HtmlEncode(header.Value)));
-                }
                 htmlEncodedRequestBinHistory.RequestHistoryItems.Add(htmlEncodedRequest);
             }
+            htmlEncodedRequestBinHistory.Settings = new HttpRequestBinHistory.HttpRequestBinSettings();
+            htmlEncodedRequestBinHistory.Settings.RequestBinProvider = requestBinHistory.Settings.RequestBinProvider;
+            htmlEncodedRequestBinHistory.Settings.RequestBinRenderer = requestBinHistory.Settings.RequestBinRenderer;
+            htmlEncodedRequestBinHistory.Settings.RequestBinMaxSize = requestBinHistory.Settings.RequestBinMaxSize;
+            htmlEncodedRequestBinHistory.Settings.RequestBodyMaxLength = requestBinHistory.Settings.RequestBodyMaxLength;
+            htmlEncodedRequestBinHistory.Settings.RequestBinSlidingExpiration = requestBinHistory.Settings.RequestBinSlidingExpiration;
+            htmlEncodedRequestBinHistory.Settings.RequestBinAbsoluteExpiration = requestBinHistory.Settings.RequestBinAbsoluteExpiration;
+
             return htmlEncodedRequestBinHistory;
         }
     }

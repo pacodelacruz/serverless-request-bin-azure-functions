@@ -4,20 +4,28 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using HttpRequestInspector.Function.Models;
+using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace HttpRequestInspector.Function.Services
 {
+    /// <summary>
+    /// Manages Request Bin in a Memory Cache
+    /// This implemention of the IRequestBinManager Interface must be treated as ephemeral
+    /// </summary>
     public class InMemoryRequestBinManager : RequestBinBase, IRequestBinManager
     {
         private readonly IMemoryCache Cache;
         private readonly MemoryCacheEntryOptions EntryOptions;
+        private readonly IOptions<RequestBinOptions> Options;
 
-        public InMemoryRequestBinManager(IMemoryCache cache)
+        public InMemoryRequestBinManager(IMemoryCache cache, IOptions<RequestBinOptions> options) : base(options) 
         {
+            Options = options;
             Cache = cache;
             EntryOptions = new MemoryCacheEntryOptions();
-            EntryOptions.SetSlidingExpiration(TimeSpan.FromMinutes(10));
-            EntryOptions.SetAbsoluteExpiration(TimeSpan.FromHours(6));
+            EntryOptions.SetSlidingExpiration(TimeSpan.FromMinutes(Options.Value.RequestBinSlidingExpiration));
+            EntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(Options.Value.RequestBinAbsoluteExpiration));
         }
 
         public HttpRequestBinHistory GetRequestBinHistory(string binId, string binUrl, string errorMessage = null)
@@ -27,14 +35,14 @@ namespace HttpRequestInspector.Function.Services
                 var encodedBinId = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(binId));
 
                 if (Cache.TryGetValue(encodedBinId, out List<HttpRequestDescription> storedRequests))
-                    return new HttpRequestBinHistory()
+                    return new HttpRequestBinHistory(Options.Value)
                     {
                         BinId = binId,
                         BinUrl = binUrl,
                         RequestHistoryItems = storedRequests
                     };
                 else
-                    return new HttpRequestBinHistory()
+                    return new HttpRequestBinHistory(Options.Value)
                     {
                         BinId = binId,
                         BinUrl = binUrl,
@@ -43,7 +51,7 @@ namespace HttpRequestInspector.Function.Services
                     };
             }
             else
-                return new HttpRequestBinHistory()
+                return new HttpRequestBinHistory(Options.Value)
                 {
                     BinId = binId,
                     BinUrl = binUrl,
@@ -62,6 +70,8 @@ namespace HttpRequestInspector.Function.Services
             if (Cache.TryGetValue(encodedBinId, out storedRequests))
             {
                 storedRequests.Add(requestDescription);
+                if (storedRequests.Count > Options.Value.RequestBinMaxSize)
+                    storedRequests = storedRequests.Skip(1).ToList();
             }
             else
                 storedRequests = new List<HttpRequestDescription>() { requestDescription };

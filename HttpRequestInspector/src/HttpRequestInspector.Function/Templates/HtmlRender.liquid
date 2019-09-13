@@ -18,12 +18,17 @@
         }
         h2 {
             width: 100%;
-            background2: #393e46;
+            background: #393e46;
             color:#eeeeee;
             margin: 0 -9999rem;
             padding: 0.25rem 9999rem;
         }
         table.requestDescription {
+            padding: 0px;
+            margin:0;
+            border-collapse: collapse;
+        }
+        table.settings {
             padding: 0px;
             margin:0;
             border-collapse: collapse;
@@ -57,11 +62,12 @@
             font-size: 0.90em;
         }
         td.value3 {
+            background: #292e36;
             color:#eeeeee;
             font-size: 0.90em;
         }
         td.preformatted {
-            background: #393e46;
+            background: #292e36;
             font-family: monospace;
             white-space: pre;
         }
@@ -127,16 +133,28 @@
 			<br/>
 			<p class="error">{{ErrorMessage}}</p>
 		{% endif %}
-    </body>
-    <footer>
-        <br/>
-        <hr/>
-        <p>
-        Created by <a href="https://twitter.com/pacodelacruz">Paco de la Cruz</a>
-        <br/>
-        Powered by Azure Functions</p>
+
 		<br/>
-		The Serverless Http Request Bin is designed for personal use.<br/>
-		Bins are persisted in memory and can be recycled at any time, so please treat them as highly ephemeral.
-    </footer>
+		<table class="settings" width="350">       
+			<tr><td class="key2" colspan="2">Request Bin Settings</td</tr>            
+			<tr><td class="key3"><pre>Provider</pre></td><td class="value3"><pre>{{Settings.RequestBinProvider}}</pre></td></tr>
+			<tr><td class="key3"><pre>Renderer</pre></td><td class="value3"><pre>{{Settings.RequestBinRenderer}}</pre></td></tr>
+			<tr><td class="key3"><pre>Bin Max Size</pre></td><td class="value3"><pre>{{Settings.RequestBinMaxSize}} requests</pre></td></tr>
+			<tr><td class="key3"><pre>Body Max Length</pre></td><td class="value3"><pre>{{Settings.RequestBodyMaxLength}} chars</pre></td></tr>
+			<tr><td class="key3"><pre>Bin Sliding Expiration</pre></td><td class="value3"><pre>{{Settings.RequestBinSlidingExpiration}} mins</pre></td></tr>
+			<tr><td class="key3"><pre>Bin Absolute Expiration</pre></td><td class="value3"><pre>{{Settings.RequestBinAbsoluteExpiration}} mins</pre></td></tr>
+		</table>
+
+		<footer>
+			<br/>
+			<hr/>
+			<p>
+			Created by <a href="https://twitter.com/pacodelacruz">Paco de la Cruz</a>
+			<br/>
+			Powered by Azure Functions</p>
+			<br/>
+			The Serverless Http Request Bin is designed for personal use.<br/>
+			Bins are persisted in memory and can be recycled at any time, so please treat them as highly ephemeral.
+		</footer>
+    </body>
 </html>

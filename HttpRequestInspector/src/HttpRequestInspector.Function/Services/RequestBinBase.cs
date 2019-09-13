@@ -7,16 +7,23 @@ using System.Threading.Tasks;
 using HttpRequestInspector.Function.Models;
 using System.Web;
 using System.Linq;
+using Microsoft.Extensions.Options;
 
 namespace HttpRequestInspector.Function.Services
 {
     public abstract class RequestBinBase
     {
+        private readonly IOptions<RequestBinOptions> Options;
+
+        public RequestBinBase(IOptions<RequestBinOptions> options)
+        {
+            Options = options;
+        }
         protected async Task<HttpRequestDescription> GetRequestDescription(HttpRequest request)
         {
             HttpRequestDescription requestDescription = new HttpRequestDescription();
-            
-            requestDescription.Body = await new StreamReader(request.Body).ReadToEndAsync();
+            requestDescription.Body = await ReadBodyFirstCharsAsync(request, Options.Value.RequestBodyMaxLength);
+            //requestDescription.Body = await new StreamReader(request.Body).ReadToEndAsync();
             requestDescription.Method = request.Method;
             requestDescription.SourceIp = request.HttpContext.Connection.RemoteIpAddress.ToString();
             requestDescription.Path = $"{request.Path}{(string.IsNullOrEmpty(request.QueryString.ToString()) ? "" : request.QueryString.ToString())}";
@@ -62,6 +69,18 @@ namespace HttpRequestInspector.Function.Services
             }
 
             return true;
+        }
+
+        private static async Task<string> ReadBodyFirstCharsAsync(HttpRequest request, int size)
+        {
+            using (var reader = new StreamReader(request.Body, Encoding.UTF8))
+            {
+                char[] buffer = new char[size];
+                int n = await reader.ReadBlockAsync(buffer, 0, size);
+                char[] result = new char[n];
+                Array.Copy(buffer, result, n);
+                return new string(result);
+            }
         }
     }
 }
