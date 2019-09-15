@@ -1,7 +1,10 @@
-@localBasePath=http://localhost:7071/
-@afBasePath=https://afrequestbin-func.azurewebsites.net/
+### Manual tests for REST Client VS Code Extension
+### https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-@basePath={{localBasePath}}
+@localBasePath=http://localhost:7071/
+@afBasePath=https://myserverlessreqbin.azurewebsites.net/
+
+@basePath={{afBasePath}}
 
 GET {{basePath}}12345?a=1&b=2
 x-my-header:1234567890                
@@ -56,9 +59,6 @@ HEAD {{basePath}}12345?a=1&b=2
 
 ###
 OPTIONS {{basePath}}12345?a=1&b=2
-
-###
-DELETE {{basePath}}12345?a=1&b=2
 
 ###
 TRACE {{basePath}}12345?a=1&b=2
