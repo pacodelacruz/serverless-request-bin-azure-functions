@@ -1,1 +1,1 @@
-# http-request-inspector-azure-functions
+# Serverless Request Bin with Azure Functions
