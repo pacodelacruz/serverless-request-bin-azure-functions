@@ -23,7 +23,7 @@ namespace ServerlessRequestBin.Function
         /// <param name="context"></param>
         [FunctionName("KeepFunctionAppWarm")]
         public static void Run(
-            [TimerTrigger("0 */8 * * * *")] TimerInfo timer,
+            [TimerTrigger("0 */5 * * * *")] TimerInfo timer,
             ILogger log,
             ExecutionContext context)
         {

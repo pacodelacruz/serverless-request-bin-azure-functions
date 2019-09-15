@@ -11,18 +11,10 @@ using ServerlessRequestBin.Function.Services;
 
 namespace ServerlessRequestBin.Function
 {
-    //TODO: Keep it warm
-    //TODO: ARM Template with App Insights and App Settings
-    //TODO: Deploy from Git
-    //TODO: Add to Serverless Library
-    //TODO: Add comments
-    //TODO: Add Readme
-    //TODO: Test
-
     /// <summary>
-    /// Function to Persist a Http request into a particular Request Bin. 
+    /// Function to persist a Http request into a particular Request Bin. 
     /// The RequestBinManager is defined via Constructor Dependency Injection. 
-    /// To call this function submit a request with ANY Method (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS, TRACE)to
+    /// To call this function submit a request with ANY Method (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS, TRACE) to
     /// http(s)://{{basepath}}/{{binId}}
     /// </summary>
     public class PersistIntoBin
