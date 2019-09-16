@@ -39,6 +39,7 @@ namespace ServerlessRequestBin.Function.Services
                     {
                         BinId = binId,
                         BinUrl = binUrl,
+                        Timestamp = DateTime.UtcNow,
                         RequestHistoryItems = storedRequests
                     };
                 else
@@ -46,6 +47,7 @@ namespace ServerlessRequestBin.Function.Services
                     {
                         BinId = binId,
                         BinUrl = binUrl,
+                        Timestamp = DateTime.UtcNow,
                         ErrorMessage = $"Request Bin with Id '{binId}' is empty. Send your requests to {binUrl}.",
                         RequestHistoryItems = null
                     };
@@ -55,6 +57,7 @@ namespace ServerlessRequestBin.Function.Services
                 {
                     BinId = binId,
                     BinUrl = binUrl,
+                    Timestamp = DateTime.UtcNow,
                     ErrorMessage = errorMessage,
                     RequestHistoryItems = null
                 };

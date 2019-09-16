@@ -33,7 +33,7 @@ namespace ServerlessRequestBin.Function.Services
 
         public LiquidRequestBinRenderer(IOptions<RequestBinOptions> options) : base(options)
         {
-            // Read and load the Liquid Template from the embedded resource
+            // Read and load the Liquid Template from an embedded resource
             using (var reader = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(
                 $"{Assembly.GetExecutingAssembly().GetName().Name}.Resources.{options.Value.RequestBinRendererTemplate}")))
             {
@@ -63,6 +63,7 @@ namespace ServerlessRequestBin.Function.Services
             var htmlEncodedRequestBinHistory = new HttpRequestBinHistory();
             htmlEncodedRequestBinHistory.BinId = HttpUtility.HtmlEncode(requestBinHistory.BinId);
             htmlEncodedRequestBinHistory.BinUrl = HttpUtility.HtmlEncode(requestBinHistory.BinUrl);
+            htmlEncodedRequestBinHistory.Timestamp = requestBinHistory.Timestamp;
             htmlEncodedRequestBinHistory.ErrorMessage = HttpUtility.HtmlEncode(requestBinHistory.ErrorMessage);
             htmlEncodedRequestBinHistory.RequestHistoryItems = new List<HttpRequestDescription>();
             foreach (var request in requestBinHistory.RequestHistoryItems.OrderByDescending(i => i.Timestamp).ToList())

@@ -25,6 +25,7 @@ namespace ServerlessRequestBin.Function.Models
         public string BinId;
         public string BinUrl;
         public string ErrorMessage;
+        public DateTime Timestamp;
         public IList<HttpRequestDescription> RequestHistoryItems;
         public HttpRequestBinSettings Settings;
 

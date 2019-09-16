@@ -23,6 +23,13 @@
             margin: 0 -9999rem;
             padding: 0.25rem 9999rem;
         }
+        p.notes {
+            font-size: 0.90em;
+            text-align: right;
+            color:#eeeeee;
+			display:block;
+			width:100%;
+        }
         table.requestDescription {
             padding: 0px;
             margin:0;
@@ -107,13 +114,14 @@
     <h1>Serverless Http Request Bin</h1>
     <h2>Bin: {{BinUrl}}</h2>
     <body>
+		<p class="notes">Last Updated (UTC): {{Timestamp}}</p>
 		{% if RequestHistoryItems.size > 0 %}
 			{% for Request in RequestHistoryItems %}
 			<br/>
         
 			<table class="requestDescription" width="100%">
 				<tr><td class="header" colspan="2">{{Request.Method}} {{Request.Path}}</td></tr>
-				<tr><td class="key2">Timestamp</td><td class="value2">{{Request.Timestamp}}</td></tr>
+				<tr><td class="key2">Timestamp (UTC)</td><td class="value2">{{Request.Timestamp}}</td></tr>
 				<tr><td class="key2">SourceIp</td><td class="value2">{{Request.SourceIp}}</td></tr>            
 				<tr><td class="key2" colspan="2">Query</td</tr>            
 				{% for Param in Request.QueryParams %}
@@ -155,7 +163,7 @@
 			</p>
 			<br/>
 			The Serverless Http Request Bin is designed for personal use.<br/>
-			Bins are persisted in memory and can be recycled at any time, so please treat them as highly ephemeral.
+			Bins are persisted in memory and serverless instances can be recycled by the cloud provider at any time, so please treat them as highly ephemeral.
 		</footer>
     </body>
 </html>
