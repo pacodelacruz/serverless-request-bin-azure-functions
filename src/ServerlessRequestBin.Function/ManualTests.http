@@ -6,62 +6,57 @@
 
 @basePath={{afBasePath}}
 
-GET {{basePath}}12345?a=1&b=2
-x-my-header:1234567890                
+GET {{basePath}}12345?a=1&b=2&c=my%20value&d=%21%40%23%24%25%5E%26%2A%28%29
+x-my-header:1234567890               
+x-my-other-header:abcdefg             
 
 ###
 POST {{basePath}}12345
-x-my-header:1234567890
+x-my-header:1234567890             
+x-my-other-header:abcdefg         
 
-<xml>Hello from VS CODE!</xml>
-1 
-  2
-    3
-      4
-        5
-          6
-            7
-              8
-                9
+<xml>Hello from VS CODE! @ API Days</xml>
+
 
 ###
 PUT {{basePath}}12345?a=1&b=2
-x-my-header:1234567890
+x-my-header:1234567890             
+x-my-other-header:zxcvbnm         
 
-<xml>Hello from VS CODE!</xml>
-1 
-  2
-    3
-      4
-        5
-          6
-            7
-              8
-                9
+<xml>
+  <item>Hello from VS CODE! @ API Days</item>
+  <item>Hello from VS CODE! @ API Days</item>
+  <item>Hello from VS CODE! @ API Days</item>
+  <item>Hello from VS CODE! @ API Days</item>
+  <item>Hello from VS CODE! @ API Days</item>
+</xml>
+
 
 ###
 PATCH {{basePath}}12345?a=1&b=2
-x-my-header:1234567890
+x-my-header:1234567890       
+x-my-other-header:zxcvbnm         
 
-<xml>Hello from VS CODE!</xml>
-1 
-  2
-    3
-      4
-        5
-          6
-            7
-              8
-                9
+<xml>
+  <item>Hello from VS CODE! @ API Days</item>
+  <item>Hello from VS CODE! @ API Days</item>
+</xml>
+
 
 ###
 HEAD {{basePath}}12345?a=1&b=2
+x-my-header:12345   
+x-my-other-header:09876    
 
 ###
 OPTIONS {{basePath}}12345?a=1&b=2
+x-my-header:12345   
+x-my-other-header:09876    
 
 ###
 TRACE {{basePath}}12345?a=1&b=2
+x-my-header:12345   
+x-my-other-header:09876    
 
 ###
 GET {{basePath}}history/12345
