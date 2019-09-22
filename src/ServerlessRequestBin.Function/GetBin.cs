@@ -28,7 +28,7 @@ namespace ServerlessRequestBin.Function
         }
 
         [FunctionName("GetBin")]
-        public async Task<ContentResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, 
             "get", 
             Route = "history/{binId}")] HttpRequest request,

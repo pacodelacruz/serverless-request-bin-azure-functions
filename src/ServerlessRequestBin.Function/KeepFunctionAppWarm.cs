@@ -15,8 +15,8 @@ namespace ServerlessRequestBin.Function
     public static class KeepFunctionAppWarm
     {
         /// <summary>
-        /// Keeps the serverless funcion app warm not only to avoid cold starts, but also to keep the in-memory cache. 
-        /// This timer tiggered function does not guarantee against instance recycling or switching by the cloud provider. 
+        /// Keeps the serverless function app warm not only to avoid cold starts, but also to keep the in-memory cache. 
+        /// This timer triggered function does not guarantee against instance recycling or host replacement by the cloud provider. 
         /// </summary>
         /// <param name="timer"></param>
         /// <param name="log"></param>

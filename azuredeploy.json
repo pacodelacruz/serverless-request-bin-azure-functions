@@ -5,7 +5,7 @@
     "appName": {
       "type": "string",
       "metadata": {
-        "description": "Name of the function app to be created. Name must be globally unique, otherwise the deployment will fail."
+        "description": "Used to name the different components of the Serverless Request Bin. I.e. the Function App, the consumption plan, Application Insights and the Azure Storage account."
       }
     },
     "appInsightsRegion": {
@@ -31,7 +31,7 @@
         "francecentral"
       ],
       "metadata": {
-        "description": "Region to deploy App Insights, which is not available in all regions."
+        "description": "Given that App Insights is not available in all regions, choose the closest region to the resource group. "
       }
     },
     "requestBinProvider": {
@@ -58,7 +58,7 @@
       "type": "string",
       "defaultValue": "DarkHtmlRender.liquid",
       "metadata": {
-        "description": "File name of the renderer template"
+        "description": "File name of the Liquid template to use while rendering the request bin history"
       }
     },
     "requestBinMaxSize": {
@@ -72,21 +72,21 @@
       "type": "int",
       "defaultValue": 128000,
       "metadata": {
-        "description": "Max number of characters to store of a request body"
+        "description": "Max number of characters to read and store of a request body. If a request body is larger than this limit, the body will be truncated."
       }
     },
     "requestBinSlidingExpiration": {
       "type": "int",
       "defaultValue": 180,
       "metadata": {
-        "description": "For the 'Memory' (cache) Provider, the sliding expiration time in minutes."
+        "description": "For the 'Memory' (cache) Provider, the sliding expiration time in minutes. This setting is to configure the In-memory cache, however, the Function App host can be replaced or recycled at any time by the platform."
       }
     },
     "requestBinAbsoluteExpiration": {
       "type": "int",
       "defaultValue": 720,
       "metadata": {
-        "description": "For the 'Memory' (cache) Provider, the absolute expiration time in minutes."
+        "description": "For the 'Memory' (cache) Provider, the absolute expiration time in minutes. This setting is to configure the In-memory cache, however, the Function App host can be replaced or recycled at any time by the platform."
       }
     }
   },
