@@ -6,6 +6,10 @@
 
 ## Context
 
+If you have developed or consumed HTTP APIs or webhooks, chances are that you have had the need of troubleshooting and inspecting HTTP requests. In the past, there was a very popular and handy free site called Request Bin (requestb.in) that allowed you to capture your HTTP requests and inspect their content, including the body, headers, query params, etc. Unfortunately, due to ongoing abuse, the publicly hosted version of Request Bin was discontinued.
+
+This application allows you to Deploy your own Serverless Request Bin to inspect HTTP Requests in a secure and cost-effective manner.
+
 Consider this a sample solution for personal use. When I was building it, I wanted to try out the new Dependency Injection capabilities of Azure Functions, and the ability to return not only object results but HTML content from functions. I also used a [DotLiquid](https://github.com/dotliquid/dotliquid) template to transform objects to HTML.
 
 The Function App is composed of four functions. Functions are just wrappers that call services. Services are instantiated via Constructor Dependency Injection and configured during the FunctionStartup. The functions are described as follows: 
