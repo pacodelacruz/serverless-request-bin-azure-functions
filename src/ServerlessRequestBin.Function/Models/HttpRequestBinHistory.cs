@@ -37,7 +37,6 @@ namespace ServerlessRequestBin.Function.Models
             public int RequestBodyMaxLength;
             public int RequestBinSlidingExpiration;
             public int RequestBinAbsoluteExpiration;
-
         }
     }
 }
