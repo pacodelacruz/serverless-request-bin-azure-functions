@@ -1,5 +1,7 @@
 # Serverless Request Bin with Azure Functions
 
+> **(!) IMPORTANT!:** There is a newer version of the Serverless Request Bin that is Stateful, check it out [here](https://github.com/pacodelacruz/serverless-request-bin-durable-functions). 
+
 ## Quick Deploy to Azure
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://azuredeploy.net/)
@@ -31,7 +33,11 @@ If you deploy your own instance of the Serverless Request Bin, you would get som
 
 ## How to Deploy your own
 
-Deploying your own instance is very easy. You just need to click on the button at the top, and this will take you to the deployment page. If you are planning to deploy the Serverless Request Bin in a new resource group, it is highly recommended creating the resource group in advance, so you can choose the region for the resource group. At the time of writing, the deploy button option does not allow you to choose the region for a new resource group. Please read the following section to understand the purpose of each of the settings.
+To deploy the Serverless Request Bin you need
+* Access to an Azure Subscription
+* Contributor access to a Resource Group or the Azure Subscription
+
+Deploying your own instance is very easy. You just need to click on the button at the top, and this will take you to the deployment page. If you are planning to deploy the Serverless Request Bin in a new resource group, it is highly recommended to create the resource group in advance, so you can choose the region for the resource group. New resources will be deployed in the same region as the resource group that you have created, with the exception of Application Insights, which is not available in all regions. At the time of writing, the  `deploy.azure.com` service used here does not allow you to choose the region for a new resource group. Please read the following section to understand the purpose of each of the settings.
 
 ## Configuration Options
 
